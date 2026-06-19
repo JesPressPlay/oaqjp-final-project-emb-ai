@@ -11,6 +11,11 @@ def render_index_template():
 def emot_detector():
     text_to_analyze = request.args.get("textToAnalyze")
     emotion = emotion_detector(text_to_analyze)
-    return f"For the given statement, the system response is 'anger': {emotion['anger']}, 'disgust': {emotion['disgust']}, 'fear': {emotion['fear']}, 'joy': {emotion['joy']} and 'sadness': {emotion['sadness']}. The dominant emotion is {emotion['dominant_emotion']}"
+
+    # Check the dominant emotion
+    if emotion['dominant_emotion'] is None:
+        return "Invalid text! Please try again!"
+    else:
+        return f"For the given statement, the system response is 'anger': {emotion['anger']}, 'disgust': {emotion['disgust']}, 'fear': {emotion['fear']}, 'joy': {emotion['joy']} and 'sadness': {emotion['sadness']}. The dominant emotion is {emotion['dominant_emotion']}"
 
 app.run(host="0.0.0.0", port=5000)
